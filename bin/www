@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+const cluster = require("cluster");
+const numCPUs = require("os").cpus().length;
+const conf = require("../config");
+if (conf.env === "development") {
+    require("./worker");
+} else {
+    cluster.setupMaster({
+        exec: "./bin/worker.js"
+    });
+
+    for (let t = 0; t < numCPUs; t++) {
+        cluster.fork();
+    }
+    cluster.on("exit", worker => {
+        console.log(`worker ${worker.process.pid} died`);
+    });
+}
