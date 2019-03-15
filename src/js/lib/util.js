@@ -6,7 +6,7 @@ let moment = require("moment");
 let _ = require("lodash");
 let urlUtil = require("url");
 let querystring = require("querystring"); //解析参数的库
-export const util = {
+export default {
     use(vue) {
         this.vue = vue;
     },
