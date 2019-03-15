@@ -6,13 +6,19 @@ const logger = require("morgan");
 const open = require("open");
 const webpack = require("webpack");
 const webpackDevMiddleware = require("webpack-dev-middleware");
+const bodyParser = require("body-parser");
+
 const conf = require("./config");
 
 const routes = require("./routes/index");
 const users = require("./routes/users");
 
 const app = express();
-
+app.use(
+    bodyParser.urlencoded({
+        extended: false
+    })
+);
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");

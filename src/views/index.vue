@@ -10,6 +10,29 @@
                 </li>
             </ul>
         </div>
+        <div>
+            <ul>
+                <li>
+                    <label>
+                        id
+                        <input type="text" v-model="newUser.uid" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        name
+                        <input type="text" v-model="newUser.name" />
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        password
+                        <input type="text" v-model="newUser.password" />
+                    </label>
+                </li>
+            </ul>
+            <button @click="addUser">add users</button>
+        </div>
     </div>
 </template>
 
@@ -21,7 +44,12 @@ export default {
     data() {
         return {
             showUserInfo: false,
-            userInfo: []
+            userInfo: [],
+            newUser: {
+                uid: null,
+                name: null,
+                password: null
+            }
         };
     },
     methods: {
@@ -43,6 +71,22 @@ export default {
                 .catch(e => {
                     console.log(e);
                 });
+        },
+        addUser() {
+            if (
+                this.newUser.uid &&
+                this.newUser.name &&
+                this.newUser.password
+            ) {
+                axios
+                    .post("/users/addUser", this.newUser)
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(e => {
+                        console.log(e);
+                    });
+            }
         }
     }
 };
